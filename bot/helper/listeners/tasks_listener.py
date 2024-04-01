@@ -456,8 +456,8 @@ class MirrorLeechListener:
                             await sendMessage(self.logMessage, msg + fmsg)
                         await sendMessage(self.message, gmsg + msg + msg_)
                         await sendMessage(self.dmMessage, gmsg + msg + fmsg)
-            await delete_links(self.message)
-            await sleep(3)
+                    await sleep(3)
+                    await delete_links(self.message)
             if self.seed:
                 if self.newDir:
                     await clean_target(self.newDir)
