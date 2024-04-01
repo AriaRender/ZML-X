@@ -435,15 +435,13 @@ class MirrorLeechListener:
             else:
                 if not files:
                     await sendMessage(self.message, gmsg + msg + msg_)
+                    await delete_message_after_delay(self.message, 300)
                     if self.logMessage:
                         await sendMessage(self.logMessage, msg)
-                    delay_minutes = 5
-                    await delete_message_after_delay(self.message, delay_minutes * 60)
                 elif self.dmMessage and not config_dict['LEECH_LOG']:
                     await sendMessage(self.dmMessage, msg)
                     await sendMessage(self.message, gmsg + msg + msg_)
-                    delay_minutes = 5
-                    await delete_message_after_delay(self.message, delay_minutes * 60)
+                    await delete_message_after_delay(self.message, 300)
                     if self.logMessage:
                         await sendMessage(self.logMessage, msg)
                 else:
@@ -459,6 +457,7 @@ class MirrorLeechListener:
                         if self.logMessage:
                             await sendMessage(self.logMessage, msg + fmsg)
                         await sendMessage(self.message, gmsg + msg + msg_)
+                        await delete_message_after_delay(self.message, 300)
                         await sendMessage(self.dmMessage, gmsg + msg + fmsg)
             if self.seed:
                 if self.newDir:
