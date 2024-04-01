@@ -206,8 +206,9 @@ async def isBot_canDm(message, dmMode, isLeech=False, button=None):
         return None, button
     user = await user_info(message._client, message.from_user.id)
     try:
-        dm_check = await message._client.send_message(message.from_user.id, "Your task added to download.")
-        await dm_check.delete()
+        #dm_check = await message._client.send_message(message.from_user.id, "Your task added to download.")
+        #await dm_check.delete()
+        pass
     except Exception as e:
         if button is None:
             button = ButtonMaker()
