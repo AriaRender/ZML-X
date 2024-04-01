@@ -119,15 +119,13 @@ class TgUploader:
         patterns = [(r'www\S+', ''),(r'^[-\s]+', ''),(r'^\s[-\s]+', ''),(r'@[\w-]+', ''),(r'\[|\]', ''),(r'\s+', ' ')]
         while any(re_sub(pattern, replacement, file_) != file_ for pattern, replacement in patterns):
             file_ = min((re_sub(pattern, replacement, file_) for pattern, replacement in patterns), key=len)
-        file_ = re_sub(r'\s+', ' ', file_)
-        file_ = re_sub(r'\s+\.', '.', file_)
-        
-        nfile_ = file_
+
         if self.__lprefix or self.__lremname:
-            nfile_ = f"{self.__lprefix} - {file_}"
+            file_ = re_sub(r'\s+', ' ', file_)
+            file_ = re_sub(r'\s+\.', '.', file_)
             file_ = f"{self.__lprefix} - {file_}"
             file_ = await remove_unwanted(file_, self.__lremname)
-            cap_mono = f"<b{nfile_}</b>"
+            cap_mono = f"<b{self.__lprefix} - {file_}</b>"
             self.__lprefix = re_sub('<.*?>', '', self.__lprefix)
             if self.__listener.seed and not self.__listener.newDir and not dirpath.endswith("/splited_files_z"):
                 dirpath = f'{dirpath}/copied_z'
