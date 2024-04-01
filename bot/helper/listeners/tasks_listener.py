@@ -450,7 +450,6 @@ class MirrorLeechListener:
                             await sendMessage(self.logMessage, msg)
                         await sendMessage(self.dmMessage, gmsg + msg)
                         await sleep(1)
-                        fmsg = '\n'
                     if fmsg != '\n':
                         if self.logMessage:
                             await sendMessage(self.logMessage, msg)
