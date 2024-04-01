@@ -78,8 +78,8 @@ class TgUploader:
 
     async def __msg_to_reply(self):
         if LEECH_LOG := config_dict['LEECH_LOG']:
-            #if self.__listener.logMessage:
-            #    self.__sent_msg = await self.__listener.logMessage.copy(LEECH_LOG)
+            if self.__listener.logMessage:
+                self.__sent_msg = await self.__listener.logMessage.copy(LEECH_LOG)
             #else:
                 #msg = f'<b>🗂️ Name</b>: <code>{escape(self.name)}</code>'
                 #msg += f'\n\n<b>⭐ #Leech_Started</b>'
