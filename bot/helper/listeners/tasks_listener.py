@@ -448,7 +448,7 @@ class MirrorLeechListener:
                     if len(fmsg.encode() + msg.encode()) > 4000:
                         if self.logMessage:
                             await sendMessage(self.logMessage, msg)
-                        await sendMessage(self.dmMessage, gmsg + msg + fmsg)
+                        await sendMessage(self.dmMessage, gmsg + msg)
                         await sleep(1)
                     if fmsg != '\n':
                         if self.logMessage:
