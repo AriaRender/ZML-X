@@ -444,11 +444,11 @@ class MirrorLeechListener:
                         await sendMessage(self.logMessage, msg)
                 else:
                     fmsg = '\n'
-                    fmsg+= f'<b>👤 Added By </b>: {self.tag}'
+                    fmsg += f'<b>👤 Added By </b>: {self.tag}'
                     if len(fmsg.encode() + msg.encode()) > 4000:
                         if self.logMessage:
                             await sendMessage(self.logMessage, msg)
-                        await sendMessage(self.dmMessage, gmsg + msg)
+                        await sendMessage(self.dmMessage, gmsg + msg + fmsg)
                         await sleep(1)
                     if fmsg != '\n':
                         if self.logMessage:
