@@ -124,7 +124,7 @@ class TgUploader:
         if self.__lprefix or self.__lremname:
             file_ = await remove_unwanted(file_, self.__lremname)
             file_ = f"{self.__lprefix} - {file_}"
-            cap_mono = f"<b>{self.__lprefix} - {file_}</b>"
+            cap_mono = f"<b>{file_}</b>"
             self.__lprefix = re_sub('<.*?>', '', self.__lprefix)
             if self.__listener.seed and not self.__listener.newDir and not dirpath.endswith("/splited_files_z"):
                 dirpath = f'{dirpath}/copied_z'
