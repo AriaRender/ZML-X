@@ -136,7 +136,7 @@ def get_readable_message():
             tag = download.message.from_user.mention if download.message.from_user else "Anonymous"
         elapsed = time() - download.extra_details['startTime']
         if config_dict['DELETE_LINKS']:
-            msg += f"<b>{download.status()}:</b> <code>{escape(f'{download.name()}')}</code>" if elapsed <= config_dict['AUTO_DELETE_MESSAGE_DURATION'] else ""
+            msg += f"<b>{download.status()}:</b> <code>{escape(f'{download.name()}')}</code>"
         else:
             msg += f"<b>{download.status()}:</b> <code>{escape(f'{download.name()}')}</code>"
         if download.status() not in [MirrorStatus.STATUS_SEEDING, MirrorStatus.STATUS_PAUSED,
