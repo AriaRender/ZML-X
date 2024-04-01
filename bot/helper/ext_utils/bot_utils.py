@@ -190,7 +190,7 @@ def get_readable_message():
             dl_speed += speed_in_bytes_per_second
         elif tstatus == MirrorStatus.STATUS_UPLOADING or tstatus == MirrorStatus.STATUS_SEEDING:
             up_speed += speed_in_bytes_per_second
-    msg += "____________________________"
+    msg = "____________________________"
     msg += f"\n\n<b>🖥 CPU</b>: {cpu_percent()}% | <b>💿 FREE</b>: {free}" \
     msg += f"\n<b>🎮 RAM</b>: {virtual_memory().percent}% | <b>🟢 UPTIME</b>: {currentTime}" \
     msg += f"\n<b>🔻 DL: </b>{get_readable_file_size(dl_speed)}/s | <b>🔺 UL: </b>{get_readable_file_size(up_speed)}/s"
