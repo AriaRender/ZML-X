@@ -434,6 +434,7 @@ class MirrorLeechListener:
                         await sendMessage(self.message, msg + fmsg)
             else:
                 if not files:
+                    await sendMessage(self.dmMessage, msg)
                     await sendMessage(self.message, gmsg + msg + msg_)
                     if self.logMessage:
                         await sendMessage(self.logMessage, msg)
@@ -448,6 +449,7 @@ class MirrorLeechListener:
                     if len(fmsg.encode() + msg.encode()) > 4000:
                         if self.logMessage:
                             await sendMessage(self.logMessage, msg + fmsg)
+                        await sendMessage(self.message, gmsg + msg + msg_)
                         await sendMessage(self.dmMessage, gmsg + msg + fmsg)
                         await sleep(1)
                         fmsg = '\n'
