@@ -410,7 +410,7 @@ class MirrorLeechListener:
         msg_ = '\n\n<b><i>Link has been sent in your DM.</i></b>'
         buttons = ButtonMaker()
         if self.isLeech:
-            msg += f'\n<b>📂 Total Files </b>: {folders}\n'
+            msg += f'\n<b>📂 Total Files </b>: {folders}'
             if mime_type != 0:
                 msg += f'<b>❌ Corrupted Files</b> : {mime_type}\n'
             msg_ = '\n<b><i>Files has been sent in your DM.</i></b>'
@@ -444,16 +444,17 @@ class MirrorLeechListener:
                         await sendMessage(self.logMessage, msg)
                 else:
                     fmsg = '\n'
-                    fmsg+= f'<b>👤 Added By </b>: {self.tag}'
+                    fmsg+= f'<b>👤 Added </b>: {self.tag}'
                     if len(fmsg.encode() + msg.encode()) > 4000:
                         if self.logMessage:
                             await sendMessage(self.logMessage, msg + fmsg)
-                        await sendMessage(self.dmMessage, gmsg + msg)
+                        await sendMessage(self.dmMessage, gmsg + msg + fmsg)
                         await sleep(1)
+                        fmsg = '\n'
                     if fmsg != '\n':
                         if self.logMessage:
                             await sendMessage(self.logMessage, msg + fmsg)
-                        await sendMessage(self.message, gmsg + msg + fmsg +msg_)
+                        await sendMessage(self.message, gmsg + msg + fmsg + msg_)
                         await sendMessage(self.dmMessage, gmsg + msg + fmsg)
             if self.seed:
                 if self.newDir:
