@@ -370,7 +370,7 @@ class MirrorLeechListener:
                 size = size - s
             LOGGER.info(f"Leech Name: {up_name}")
             tg = TgUploader(up_name, up_dir, self)
-            tg_upload_status = TelegramStatus(tg, size, gid, 'up', self.extra_details)
+            tg_upload_status = TelegramStatus(tg, size, self.message, gid, 'up', self.extra_details)
             async with download_dict_lock:
                 download_dict[self.uid] = tg_upload_status
             await update_all_messages()
@@ -379,7 +379,7 @@ class MirrorLeechListener:
             size = await get_path_size(up_path)
             LOGGER.info(f"Upload Name: {up_name}")
             drive = gdUpload(up_name, up_dir, self)
-            upload_status = GdriveStatus(drive, size, gid, 'up', self.extra_details)
+            upload_status = GdriveStatus(drive, size, self.message, gid, 'up', self.extra_details)
             async with download_dict_lock:
                 download_dict[self.uid] = upload_status
             await update_all_messages()
@@ -389,7 +389,7 @@ class MirrorLeechListener:
             LOGGER.info(f"Upload Name: {up_name}")
             RCTransfer = RcloneTransferHelper(self, up_name)
             async with download_dict_lock:
-                download_dict[self.uid] = RcloneStatus(RCTransfer, gid, 'up', self.extra_details)
+                download_dict[self.uid] = RcloneStatus(RCTransfer, self.message, gid, 'up', self.extra_details)
             await update_all_messages()
             await RCTransfer.upload(up_path, size)
 
@@ -416,7 +416,7 @@ class MirrorLeechListener:
             msg_ = '\n<b><i>Files has been sent in your DM.</i></b>'
             if not self.dmMessage:
                 if not files:
-                    await sendMessage(msg)
+                    await sendMessage(self.message, msg)
                     if self.logMessage:
                         await sendMessage(self.logMessage,  msg)
                 else:
@@ -425,21 +425,21 @@ class MirrorLeechListener:
                     if len(fmsg.encode() + msg.encode()) > 4000:
                         if self.logMessage:
                             await sendMessage(self.logMessage, msg + fmsg)
-                        await sendMessage(msg + fmsg)
+                        await sendMessage(self.message, msg + fmsg)
                         await sleep(1)
                         fmsg = '\n'
                     if fmsg != '\n':
                         if self.logMessage:
                             await sendMessage(self.logMessage, msg + fmsg)
-                        await sendMessage(msg + fmsg)
+                        await sendMessage(self.message, msg + fmsg)
             else:
                 if not files:
-                    await sendMessage(gmsg + msg + msg_)
+                    await sendMessage(self.message, gmsg + msg + msg_)
                     if self.logMessage:
                         await sendMessage(self.logMessage, msg)
                 elif self.dmMessage and not config_dict['LEECH_LOG']:
                     await sendMessage(self.dmMessage, msg)
-                    await sendMessage(gmsg + msg + msg_)
+                    await sendMessage(self.message, gmsg + msg + msg_)
                     if self.logMessage:
                         await sendMessage(self.logMessage, msg)
                 else:
@@ -454,7 +454,7 @@ class MirrorLeechListener:
                     if fmsg != '\n':
                         if self.logMessage:
                             await sendMessage(self.logMessage, msg + fmsg)
-                        await sendMessage(gmsg + msg + msg_)
+                        await sendMessage(self.message, gmsg + msg + msg_)
                         await sendMessage(self.dmMessage, gmsg + msg + fmsg)
             if self.seed:
                 if self.newDir:
@@ -499,19 +499,19 @@ class MirrorLeechListener:
                 buttons = extra_btns(buttons)
                 if self.dmMessage:
                     await sendMessage(self.dmMessage, msg + _msg, buttons.build_menu(2))
-                    await sendMessage(gmsg + msg + msg_)
+                    await sendMessage(self.message, gmsg + msg + msg_)
                 else:
-                    await sendMessage(msg + _msg, buttons.build_menu(2))
+                    await sendMessage(self.message, msg + _msg, buttons.build_menu(2))
                 if self.logMessage:
                     if link.startswith("https://drive.google.com/") and config_dict['DISABLE_DRIVE_LINK']:
                         buttons.ubutton("♻️ Drive Link", link, 'header')
                     await sendMessage(self.logMessage, msg + _msg, buttons.build_menu(2))
             else:
                 if self.dmMessage:
-                    await sendMessage(gmsg + msg + msg_)
+                    await sendMessage(self.message, gmsg + msg + msg_)
                     await sendMessage(self.dmMessage, msg + _msg)
                 else:
-                    await sendMessage(msg + _msg + msg_)
+                    await sendMessage(self.message, msg + _msg + msg_)
                 if self.logMessage:
                     await sendMessage(self.logMessage, msg + _msg)
             if self.seed and not self.isClone:
@@ -555,7 +555,7 @@ class MirrorLeechListener:
         msg += f"\n<b>⏳ Elapsed </b>: {get_readable_time(time() - self.extra_details['startTime'])}"
         msg += f"\n<b>📤 Upload  </b>: {self.extra_details['mode']}"
         msg += f'\n<b>👤 Added </b>: {self.tag}'
-        tlmsg = await sendMessage(msg, button)
+        tlmsg = await sendMessage(self.message, msg, button)
         if self.logMessage:
             await sendMessage(self.logMessage, msg, button)
         if count == 0:
@@ -567,7 +567,7 @@ class MirrorLeechListener:
         if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
             await DbManager().rm_complete_task(self.message.link)
         if config_dict['DELETE_LINKS']:
-            await auto_delete_message(tlmsg)
+            await auto_delete_message(self.message, tlmsg)
 
         async with queue_dict_lock:
             if self.uid in queued_dl:
@@ -600,7 +600,7 @@ class MirrorLeechListener:
         msg += f"\n<b>⏳ Elapsed </b>: {get_readable_time(time() - self.extra_details['startTime'])}"
         msg += f"\n<b>📤 Upload  </b>: {self.extra_details['mode']}"
         msg += f'\n<b>👤 Added </b>: {self.tag}'
-        tlmsg = await sendMessage(msg)
+        tlmsg = await sendMessage(self.message, msg)
         if self.logMessage:
             await sendMessage(self.logMessage, msg)
         if count == 0:
@@ -612,7 +612,7 @@ class MirrorLeechListener:
         if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
             await DbManager().rm_complete_task(self.message.link)
         if config_dict['DELETE_LINKS']:
-            await auto_delete_message(tlmsg)
+            await auto_delete_message(self.message, tlmsg)
 
         async with queue_dict_lock:
             if self.uid in queued_dl:
