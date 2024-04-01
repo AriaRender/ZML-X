@@ -25,9 +25,6 @@ You can add tuple and dict also. Use double quotes inside dict.
 <b>Multi links only by replying to first link</b>: -m
 <code>/{cmd}</code> -m 10(number of links)
 
-<b>Multi links within same upload directory only by replying to first link</b>: -sd
-<code>/{cmd}</code> -m 10(number of links) -sd folder name
-
 <b>Bulk Download</b>: -b
 <code>/{cmd}</code> link -b
 Bulk can be used by text message and by replying to text file contains links seperated by new line.
@@ -70,10 +67,6 @@ Note: It doesn't work with torrents.
 <b><u>Multi links by replying to first link/file</u></b>: -m
 <code>/{cmd}</code> -m 10(number of links/files)
 
-<b><u>Multi links in same folder by replying to first link/file</u></b>: -sd or -samedir
-<code>/{cmd}</code> -m 10(number of links/files) -sd folder name (multi message)
-<code>/{cmd}</code> -b -sd folder name (bulk-message/file)
-
 <b><u>Bulk Download</u></b>: -b or -bulk
 <code>/{cmd}</code> link -b
 Bulk can be used by text message and by replying to text file contains links seperated by new line.
@@ -81,10 +74,7 @@ You can use it only by reply to message(text/file).
 All options should be along with link!
 
 <b><u>Join Splitted Files</u></b>: -j or -join
-This option will only work before extract and zip, so mostly it will be used with -sd argument (samedir)
-By Reply:
-<code>/{cmd}</code> -m 3 -j -sd folder name
-<code>/{cmd}</code> -b -j -sd folder name
+This option will only work before extract and zip
 If your link have splitted files:
 <code>/{cmd}</code> link -j
 
