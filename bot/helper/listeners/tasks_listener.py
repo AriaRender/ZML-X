@@ -454,7 +454,7 @@ class MirrorLeechListener:
                     if fmsg != '\n':
                         if self.logMessage:
                             await sendMessage(self.logMessage, msg + fmsg)
-                        await sendMessage(self.message, gmsg + msg + fmsg + msg_)
+                        await sendMessage(self.message, gmsg + msg + '<b>👤 Added By </b>: {self.tag}' + msg_)
                         await sendMessage(self.dmMessage, gmsg + msg + fmsg)
             if self.seed:
                 if self.newDir:
