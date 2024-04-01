@@ -443,8 +443,7 @@ class MirrorLeechListener:
                     if self.logMessage:
                         await sendMessage(self.logMessage, msg)
                 else:
-                    fmsg = '\n'
-                    fmsg+= f'<b>👤 Added By </b>: {self.tag}'
+                    fmsg = f'<b>👤 Added By </b>: {self.tag}'
                     if len(fmsg.encode() + msg.encode()) > 4000:
                         if self.logMessage:
                             await sendMessage(self.logMessage, msg + fmsg)
@@ -454,7 +453,7 @@ class MirrorLeechListener:
                     if fmsg != '\n':
                         if self.logMessage:
                             await sendMessage(self.logMessage, msg + fmsg)
-                        await sendMessage(self.message, gmsg + msg + f'<b>👤 Added By </b>: {self.tag}' + msg_)
+                        await sendMessage(self.message, gmsg + msg + fmsg + msg_)
                         await sendMessage(self.dmMessage, gmsg + msg + fmsg)
             if self.seed:
                 if self.newDir:
