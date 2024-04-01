@@ -393,6 +393,12 @@ class MirrorLeechListener:
             await update_all_messages()
             await RCTransfer.upload(up_path, size)
 
+    async def delete_message_after_delay(message, delay):
+        await asyncio.sleep(delay)
+        try:
+            await message.delete()
+        except Exception as e:
+            print(f"Error deleting message: {e}")
 
 
     async def onUploadComplete(self, link, size, files, folders, mime_type, name, rclonePath=''):
