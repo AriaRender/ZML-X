@@ -222,8 +222,8 @@ class YtSelection:
         buttons.ibutton('Back', 'ytq back', 'footer')
         buttons.ibutton('Cancel', 'ytq cancel', 'footer')
         subbuttons = buttons.build_menu(3)
-        msg = f'Choose Audio{i} Format:\nTimeout: '
-        msg += f'{get_readable_time(self.__timeout-(time()-self.__time))}\n\ncc: {self.__tag}'
+        msg = f'<b>🎙 Choose Audio{i} Format:\nTimeout: </b>'
+        msg += f'<b>{get_readable_time(self.__timeout-(time()-self.__time))}\n\n👤 Added By : {self.__tag}</b>'
         await editMessage(self.__reply_to, msg, subbuttons)
 
     async def audio_quality(self, format):
@@ -235,8 +235,8 @@ class YtSelection:
         buttons.ibutton('Back', 'ytq aq back')
         buttons.ibutton('Cancel', 'ytq aq cancel')
         subbuttons = buttons.build_menu(5)
-        msg = f'Choose Audio{i} Qaulity:\n0 is best and 10 is worst'
-        msg += f'\nTimeout: {get_readable_time(self.__timeout-(time()-self.__time))}\n\ncc: {self.__tag}'
+        msg = f'<b>🎙 Choose Audio{i} Qaulity:\n0 is best and 10 is worst</b>'
+        msg += f'<b>\nTimeout: {get_readable_time(self.__timeout-(time()-self.__time))}\n\n👤 Added By : {self.__tag}</b>'
         await editMessage(self.__reply_to, msg, subbuttons)
 
 
@@ -320,9 +320,9 @@ async def _ytdl(client, message, isLeech=False, sameDir=None, bulk=[]):
         try:
             bulk = await extract_bulk_links(message, bulk_start, bulk_end)
             if len(bulk) == 0:
-                raise ValueError('Bulk Empty!')
+                raise ValueError('<b>Bulk Empty!</b>')
         except:
-            ymsg = await sendMessage(message, f'Reply to text file or tg message that have links seperated by new line!')
+            ymsg = await sendMessage(message, f'<b>Reply to text file or tg message that have links seperated by new line!</b>')
             await delete_links(message)
             await auto_delete_message(message, ymsg)
             return
@@ -526,7 +526,7 @@ async def _ytdl(client, message, isLeech=False, sameDir=None, bulk=[]):
         qual = await YtSelection(client, message).get_quality(result)
         if qual is None:
             return
-    LOGGER.info(f"Downloading with YT-DLP: {link} added by : {user_id}")
+    LOGGER.info(f"<b>Downloading with YT-DLP: {link} \n\n👤 Added By : {user_id}")
     playlist = 'entries' in result
     ydl = YoutubeDLHelper(listener)
     await ydl.add_download(link, path, name, qual, playlist, opt)
