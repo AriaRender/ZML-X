@@ -252,12 +252,17 @@ async def _mirror_leech(client, message, isQbit=False, isLeech=False, sameDir=No
         none_admin_msg, error_button = await none_admin_utils(message, isLeech)
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
-    if (dmMode := config_dict['DM_MODE']) and message.chat.type == message.chat.type.SUPERGROUP:
+    if message.chat.type == message.chat.type.SUPERGROUP:
         if isLeech and IS_PREMIUM_USER and not config_dict['LEECH_LOG']:
             error_msg.append('DM_MODE and User Session need LEECH_LOG')
-        dmMessage, error_button = await isBot_canDm(message, dmMode, isLeech, error_button)
-        if dmMessage is not None and dmMessage != 'BotStarted':
-            error_msg.append(dmMessage)
+        
+        # Add this part to force sending files to DMs
+        dmMode = True
+        if dmMode:
+            dmMessage, error_button = await isBot_canDm(message, dmMode, isLeech, error_button)
+            if dmMessage is not None and dmMessage != 'BotStarted':
+                error_msg.append(dmMessage)
+
     else:
         dmMessage = None
     if error_msg:
