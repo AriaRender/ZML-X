@@ -443,13 +443,13 @@ class MirrorLeechListener:
                     await sendMessage(self.message, gmsg + msg + msg_)
                     if self.logMessage:
                         await sendMessage(self.logMessage, msg)
-                await delete_message_after_delay(self.message, 300)
+                await delete_message_after_delay(self.message, 10)
                 elif self.dmMessage and not config_dict['LEECH_LOG']:
                     await sendMessage(self.dmMessage, msg)
                     await sendMessage(self.message, gmsg + msg + msg_)
                     if self.logMessage:
                         await sendMessage(self.logMessage, msg)
-                await delete_message_after_delay(self.message, 300)
+                await delete_message_after_delay(self.message, 10)
                 else:
                     fmsg = '\n'
                     fmsg+= f'<b>👤 Added By </b>: {self.tag}'
@@ -464,7 +464,7 @@ class MirrorLeechListener:
                             await sendMessage(self.logMessage, msg + fmsg)
                         await sendMessage(self.message, gmsg + msg + msg_)
                         await sendMessage(self.dmMessage, gmsg + msg + fmsg)
-                    await delete_message_after_delay(self.message, 300)
+                    await delete_message_after_delay(self.message, 10)
             if self.seed:
                 if self.newDir:
                     await clean_target(self.newDir)
