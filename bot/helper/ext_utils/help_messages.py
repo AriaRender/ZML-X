@@ -99,7 +99,6 @@ If your link have splitted files:
 8. -u or -username to enter username.
 9. -p or -password to enter password.
 """
-#2. Read all arguments <a href='https://graph.org/Z-Mirror-Bot-Arguments-06-10'>HERE</a>.
 
 RSS_HELP_MESSAGE = """
 <b><u>Use this format to add feed url</u></b>:
