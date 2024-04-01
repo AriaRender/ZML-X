@@ -192,8 +192,8 @@ def get_readable_message():
             up_speed += speed_in_bytes_per_second
     
     msg += "____________________________"
-    msg += f"\n\n<b>🖥 CPU</b>: {cpu_percent()}% | <b>💿 FREE</b>: {free}"
-    msg += f"\n<b>🎮 RAM</b>: {virtual_memory().percent}% | <b>🟢 UPTIME</b>: {currentTime}"
+    msg += f"\n\n<b>🖥 CPU</b>: {cpu_percent()}% | <b>💿 FREE</b>: {get_readable_file_size(disk_usage(config_dict['DOWNLOAD_DIR']).free)}"
+    msg += f"\n<b>🎮 RAM</b>: {virtual_memory().percent}% | <b>🟢 UPTIME</b>: {get_readable_time(time() - botStartTime)}"
     msg += f"\n<b>🔻 DL: </b>{get_readable_file_size(dl_speed)}/s | <b>🔺 UL: </b>{get_readable_file_size(up_speed)}/s"
     if tasks <= STATUS_LIMIT:
         buttons = ButtonMaker()
