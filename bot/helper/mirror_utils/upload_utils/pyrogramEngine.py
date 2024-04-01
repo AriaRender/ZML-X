@@ -75,7 +75,7 @@ class TgUploader:
         if not await aiopath.exists(self.__thumb):
             self.__thumb = None
         self.__upload_dest = user_dict.get('user_dump') or config_dict['USER_DUMP']
-    
+
     async def __msg_to_reply(self):
         if LEECH_LOG := config_dict['LEECH_LOG']:
             if self.__listener.logMessage:
@@ -86,8 +86,6 @@ class TgUploader:
                 self.__sent_msg = await bot.send_message(LEECH_LOG, msg, disable_web_page_preview=True)
             if self.__listener.dmMessage:
                 self.__sent_DMmsg = self.__listener.dmMessage
-                # Send DM here
-                await bot.send_message(self.__listener.dmMessage.chat.id, "Your file processing is complete!")
             if IS_PREMIUM_USER:
                 try:
                     self.__sent_msg = await user.get_messages(chat_id=self.__sent_msg.chat.id, message_ids=self.__sent_msg.id)
@@ -108,12 +106,8 @@ class TgUploader:
                 await self.__listener.onUploadError(e)
             if self.__listener.dmMessage:
                 self.__sent_DMmsg = self.__listener.dmMessage
-                # Send DM here
-                await bot.send_message(self.__listener.dmMessage.chat.id, "Your file processing is complete!")
         elif self.__listener.dmMessage:
             self.__sent_msg = self.__listener.dmMessage
-            # Send DM here
-            await bot.send_message(self.__listener.dmMessage.chat.id, "Your file processing is complete!")
         else:
             self.__sent_msg = self.__listener.message
         if self.__sent_msg is None:
@@ -135,7 +129,7 @@ class TgUploader:
             if self.__listener.seed and not self.__listener.newDir and not dirpath.endswith("/splited_files_z"):
                 dirpath = f'{dirpath}/copied_z'
                 await makedirs(dirpath, exist_ok=True)
-                new_path = ospath.join(dirpath, f"{self.__lprefix} - {file_}")
+                new_path = ospath.join(dirpath, f"{file_}")
                 self.__up_path = await copy(self.__up_path, new_path)
             else:
                 new_path = ospath.join(dirpath, f"{self.__lprefix} - {file_}")
