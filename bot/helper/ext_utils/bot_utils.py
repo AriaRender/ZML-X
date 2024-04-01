@@ -167,6 +167,7 @@ def get_readable_message():
         else:
             msg += f"\n<b>📦 Size:</b> {download.size()}"
         if config_dict['DELETE_LINKS']:
+            msg += f"\n<b>👤 User:</b> {tag}"
             msg += f"<b> | Mode:</b> {download.extra_details['mode']}"
         else:
             msg += f"\n<b>👤 User:</b> {tag}"
