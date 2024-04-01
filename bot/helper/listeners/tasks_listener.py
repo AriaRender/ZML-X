@@ -456,8 +456,7 @@ class MirrorLeechListener:
                             await sendMessage(self.logMessage, msg + fmsg)
                         await sendMessage(self.message, gmsg + msg + msg_)
                         await sendMessage(self.dmMessage, gmsg + msg + fmsg)
-                        await delete_links(self.message)
-
+            await delete_links(self.message)
             if self.seed:
                 if self.newDir:
                     await clean_target(self.newDir)
@@ -466,6 +465,7 @@ class MirrorLeechListener:
                         non_queued_up.remove(self.uid)
                 await start_from_queued()
                 return
+            await delete_links(self.message)
         else:
             msg += f'\n<b>Type            </b>: {mime_type}'
             if mime_type == "Folder":
