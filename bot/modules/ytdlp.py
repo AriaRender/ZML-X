@@ -169,8 +169,8 @@ class YtSelection:
             buttons.ibutton('Best Audio', 'ytq ba/b')
             buttons.ibutton('Cancel', 'ytq cancel', 'footer')
             self.__main_buttons = buttons.build_menu(2)
-            msg = f'Choose Video Quality:\nTimeout: '
-            msg += f'{get_readable_time(self.__timeout-(time()-self.__time))}\n\ncc: {self.__tag}'
+            msg = f'<b>🎥 Choose Video Quality:\nTimeout: </b>'
+            msg += f'<b>{get_readable_time(self.__timeout-(time()-self.__time))}\n\n👤 Added By : {self.__tag}</b>'
         self.__reply_to = await sendMessage(self.__message, msg, self.__main_buttons)
         await wrap_future(future)
         if not self.is_cancelled:
@@ -179,11 +179,11 @@ class YtSelection:
 
     async def back_to_main(self):
         if self.__is_playlist:
-            msg = f'Choose Playlist Videos Quality:\nTimeout: '
-            msg += f'{get_readable_time(self.__timeout-(time()-self.__time))}\n\ncc: {self.__tag}'
+            msg = f'<b>🎥  Choose Playlist Videos Quality:\nTimeout: </b>'
+            msg += f'{get_readable_time(self.__timeout-(time()-self.__time))}\n\n👤 Added By : {self.__tag}'
         else:
-            msg = f'Choose Video Quality:\nTimeout: '
-            msg += f'{get_readable_time(self.__timeout-(time()-self.__time))}\n\ncc: {self.__tag}'
+            msg = f'<b>🎥  Choose Video Quality:\nTimeout: </b>'
+            msg += f'<b>{get_readable_time(self.__timeout-(time()-self.__time))}\n\n👤 Added By : {self.__tag}</b>'
         await editMessage(self.__reply_to, msg, self.__main_buttons)
 
     async def qual_subbuttons(self, b_name):
