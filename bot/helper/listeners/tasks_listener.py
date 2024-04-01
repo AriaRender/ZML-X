@@ -413,7 +413,7 @@ class MirrorLeechListener:
             msg += f'\n<b>📂 Total Files </b>: {folders}'
             if mime_type != 0:
                 msg += f'<b>❌ Corrupted Files</b> : {mime_type}\n'
-            msg_ = '\n<b><i>Files has been sent in your DM.</i></b>'
+            msg_ = '\n\n<b><i>Files has been sent in your DM.</i></b>'
             if not self.dmMessage:
                 if not files:
                     await sendMessage(self.message, msg)
@@ -447,8 +447,8 @@ class MirrorLeechListener:
                     fmsg+= f'<b>👤 Added </b>: {self.tag}'
                     if len(fmsg.encode() + msg.encode()) > 4000:
                         if self.logMessage:
-                            await sendMessage(self.logMessage, msg + fmsg)
-                        await sendMessage(self.dmMessage, gmsg + msg + fmsg)
+                            await sendMessage(self.logMessage, msg)
+                        await sendMessage(self.dmMessage, gmsg + msg)
                         await sleep(1)
                         fmsg = '\n'
                     if fmsg != '\n':
