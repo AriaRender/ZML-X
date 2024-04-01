@@ -118,7 +118,7 @@ class TgUploader:
     async def __prepare_file(self, file_, dirpath):
         patterns = [(r'www\S+', ''),(r'^[-\s]+', ''),(r'^\s[-\s]+', ''),(r'@[\w-]+', ''),(r'\[|\]', ''),(r'\s+', ' ')]
         while any(re_sub(pattern, replacement, file_) != file_ for pattern, replacement in patterns):
-        file_ = min((re_sub(pattern, replacement, file_) for pattern, replacement in patterns), key=len)
+            file_ = min((re_sub(pattern, replacement, file_) for pattern, replacement in patterns), key=len)
         file_ = re_sub(r'\s+', ' ', file_)
         file_ = re_sub(r'\s+\.', '.', file_)
         nfile_ = file_
