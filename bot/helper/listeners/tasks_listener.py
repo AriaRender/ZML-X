@@ -393,12 +393,6 @@ class MirrorLeechListener:
             await update_all_messages()
             await RCTransfer.upload(up_path, size)
 
-    async def delete_message_after_delay(message, delay):
-        await asyncio.sleep(delay)
-        try:
-            await message.delete()
-        except Exception as e:
-            print(f"Error deleting message: {e}")
 
 
     async def onUploadComplete(self, link, size, files, folders, mime_type, name, rclonePath=''):
@@ -443,13 +437,11 @@ class MirrorLeechListener:
                     await sendMessage(self.message, gmsg + msg + msg_)
                     if self.logMessage:
                         await sendMessage(self.logMessage, msg)
-                    await delete_message_after_delay(message, 10)
                 elif self.dmMessage and not config_dict['LEECH_LOG']:
                     await sendMessage(self.dmMessage, msg)
                     await sendMessage(self.message, gmsg + msg + msg_)
                     if self.logMessage:
                         await sendMessage(self.logMessage, msg)
-                    await delete_message_after_delay(message, 10)
                 else:
                     fmsg = '\n'
                     fmsg+= f'<b>👤 Added By </b>: {self.tag}'
@@ -464,7 +456,8 @@ class MirrorLeechListener:
                             await sendMessage(self.logMessage, msg + fmsg)
                         await sendMessage(self.message, gmsg + msg + msg_)
                         await sendMessage(self.dmMessage, gmsg + msg + fmsg)
-                        await delete_message_after_delay(message, 10)
+                        await delete_links(self.message)
+
             if self.seed:
                 if self.newDir:
                     await clean_target(self.newDir)
