@@ -119,8 +119,8 @@ class MirrorLeechListener:
             self.extra_details['source'] = f"<i>{source}</i>"
 
     async def onDownloadStart(self):
-        if self.dmMessage == 'BotStarted':
-            self.dmMessage = await send_to_chat(self.message._client, self.message.from_user.id, self.message.link)
+        #if self.dmMessage == 'BotStarted':
+        #    self.dmMessage = await send_to_chat(self.message._client, self.message.from_user.id, self.message.link)
         if DATABASE_URL and config_dict['STOP_DUPLICATE_TASKS'] and self.raw_url:
             await DbManager().add_download_url(self.raw_url, self.tag)
         if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
