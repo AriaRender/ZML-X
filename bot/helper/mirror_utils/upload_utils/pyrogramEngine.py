@@ -121,6 +121,7 @@ class TgUploader:
             file_ = min((re_sub(pattern, replacement, file_) for pattern, replacement in patterns), key=len)
         file_ = re_sub(r'\s+', ' ', file_)
         file_ = re_sub(r'\s+\.', '.', file_)
+        
         nfile_ = file_
         if self.__lprefix or self.__lremname:
             nfile_ = f"{self.__lprefix} - {file_}"
