@@ -395,7 +395,7 @@ class MirrorLeechListener:
 
 
 
-    async def onUploadComplete(self, link, size, files, folders, mime_type, name, rclonePath=''):
+    async def onUploadComplete(message, self, link, size, files, folders, mime_type, name, rclonePath=''):
         if DATABASE_URL and config_dict['STOP_DUPLICATE_TASKS'] and self.raw_url:
             await DbManager().remove_download(self.raw_url)
         if self.isSuperGroup and config_dict['INCOMPLETE_TASK_NOTIFIER'] and DATABASE_URL:
