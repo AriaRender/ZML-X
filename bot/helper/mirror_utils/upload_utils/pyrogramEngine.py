@@ -125,16 +125,6 @@ class TgUploader:
             file_ = f"{self.__lprefix} - {file_}"
             self.__lprefix = re_sub('<.*?>', '', self.__lprefix)
             cap_mono = f"<b>{file_}</b>"
-            
-            if self.__listener.seed and not self.__listener.newDir and not dirpath.endswith("/splited_files_z"):
-                dirpath = f'{dirpath}/copied_z'
-                await makedirs(dirpath, exist_ok=True)
-                new_path = ospath.join(dirpath, f"{file_}")
-                self.__up_path = await copy(self.__up_path, new_path)
-            else:
-                new_path = ospath.join(dirpath, f"{file_}")
-                await aiorename(self.__up_path, new_path)
-                self.__up_path = new_path
         else:
             if len(file_) > 60:
                 if is_archive(file_):
@@ -162,9 +152,17 @@ class TgUploader:
                     await aiorename(self.__up_path, new_path)
                     self.__up_path = new_path
             cap_mono = f"<b>{ospath.basename(file_)}</b>"
-            
         return cap_mono
-
+        
+        if self.__listener.seed and not self.__listener.newDir and not dirpath.endswith("/splited_files_z"):
+            dirpath = f'{dirpath}/copied_z'
+            await makedirs(dirpath, exist_ok=True)
+            new_path = ospath.join(dirpath, f"{file_}")
+            self.__up_path = await copy(self.__up_path, new_path)
+        else:
+            new_path = ospath.join(dirpath, f"{file_}")
+            await aiorename(self.__up_path, new_path)
+            self.__up_path = new_path
 
     async def __get_input_media(self, subkey, key, msg_list=None):
         rlist = []
