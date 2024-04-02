@@ -116,10 +116,10 @@ class TgUploader:
         return True
 
     async def __prepare_file(self, file_, dirpath):
-#        patterns = [(r'www\S+', ''),(r'^[-\s]+', ''),(r'^\s[-\s]+', ''),(r'@[\w-]+', ''),(r'\[|\]', ''),(r'\s+\.', '.'),(r'\s+', ' ')]
-#        while any(re_sub(pattern, replacement, file_) != file_ for pattern, replacement in patterns):
-#            file_ = min((re_sub(pattern, replacement, file_) for pattern, replacement in patterns), key=len)
-        
+        patterns = [(r'www\S+', ''),(r'^[-\s]+', ''),(r'^\s[-\s]+', ''),(r'@[\w-]+', ''),(r'\[|\]', ''),(r'\s+\.', '.'),(r'\s+', ' ')]
+        while any(re_sub(pattern, replacement, file_) != file_ for pattern, replacement in patterns):
+            file_ = min((re_sub(pattern, replacement, file_) for pattern, replacement in patterns), key=len)
+        file_ = file_
         if self.__lprefix or self.__lremname:
             file_ = await remove_unwanted(file_, self.__lremname)
             file_ = f"{self.__lprefix} - {file_}"
@@ -148,7 +148,7 @@ class TgUploader:
                 ext = fsplit[1]
             else:
                 name = file_
-                ext = ''
+                ext = file_
             extn = len(ext)
             remain = 60 - extn
             name = name[:remain]
