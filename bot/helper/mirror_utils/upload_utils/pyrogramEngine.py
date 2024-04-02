@@ -116,23 +116,24 @@ class TgUploader:
         return True
 
     async def __prepare_file(self, file_, dirpath):
-        file_ = re_sub(r'www\S+', '', file_)
+        nfile_ = file_
+        nfile_ = re_sub(r'www\S+', '', nfile_)
         if self.__lprefix or self.__lremname:
             file_ = await remove_unwanted(file_, self.__lremname)
-            file_ = f"{self.__lprefix} {file_}"
-            cap_mono = f"<b>{file_}</b>"
+            nfile_ = f"{self.__lprefix} {file_}"
+            cap_mono = f"<b>{nfile_}</b>"
             self.__lprefix = re_sub('<.*?>', '', self.__lprefix)
             if self.__listener.seed and not self.__listener.newDir and not dirpath.endswith("/splited_files_z"):
                 dirpath = f'{dirpath}/copied_z'
                 await makedirs(dirpath, exist_ok=True)
-                new_path = ospath.join(dirpath, f"{file_}")
+                new_path = ospath.join(dirpath, f"{nfile_}")
                 self.__up_path = await copy(self.__up_path, new_path)
             else:
-                new_path = ospath.join(dirpath, f"{file_}")
+                new_path = ospath.join(dirpath, f"{nfile_}")
                 await aiorename(self.__up_path, new_path)
-                self.__up_path = await copy(self.__up_path, new_path)
+                self.__up_path = new_path
         else:
-            cap_mono = f"<b>{file_}</b>"
+            cap_mono = f"<b>{nfile_}</b>"
         if len(file_) > 60:
             if is_archive(file_):
                 name = get_base_name(file_)
