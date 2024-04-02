@@ -116,26 +116,17 @@ class TgUploader:
         return True
 
     async def __prepare_file(self, file_, dirpath):
-        patterns = [
-            (r'www\S+', ''),
-            (r'^[-\s]+', ''),
-            (r'^\s[-\s]+', ''),
-            (r'@[\w-]+', ''),
-            (r'\[|\]', ''),
-            (r'\s+\.', '.'),
-            (r'\s+', ' ')
-        ]
+        patterns = [(r'www\S+', ''),(r'^[-\s]+', ''),(r'^\s[-\s]+', ''),(r'@[\w-]+', ''),(r'\[|\]', ''),(r'\s+\.', '.'),(r'\s+', ' ')]
         while any(re_sub(pattern, replacement, file_) != file_ for pattern, replacement in patterns):
             file_ = min((re_sub(pattern, replacement, file_) for pattern, replacement in patterns), key=len)
-
-        cap_mono = file_  # Initialize cap_mono with file_ by default
+        
 
         if self.__lprefix or self.__lremname:
             file_ = await remove_unwanted(file_, self.__lremname)
             file_ = f"{self.__lprefix} - {file_}"
             self.__lprefix = re_sub('<.*?>', '', self.__lprefix)
             cap_mono = f"<b>{file_}</b>"
-
+            
             if self.__listener.seed and not self.__listener.newDir and not dirpath.endswith("/splited_files_z"):
                 dirpath = f'{dirpath}/copied_z'
                 await makedirs(dirpath, exist_ok=True)
@@ -171,9 +162,9 @@ class TgUploader:
                     new_path = ospath.join(dirpath, f"{name}{ext}")
                     await aiorename(self.__up_path, new_path)
                     self.__up_path = new_path
-            cap_mono = f"<b>{ospath.basename(file_)}</b>"
-
-        return new_path if patterns else cap_mono
+            cap_mono = f"<b>1 {ospath.basename(file_)}</b>"
+            
+        return cap_mono
 
 
     async def __get_input_media(self, subkey, key, msg_list=None):
