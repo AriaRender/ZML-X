@@ -209,6 +209,10 @@ async def split_file(path, size, dirpath, split_size, listener, start_time=0, i=
 
 
 async def remove_unwanted(file_, lremname):
+    patterns = [(r'www\S+', ''),(r'^[-\s]+', ''),(r'^\s[-\s]+', ''),(r'@[\w-]+', ''),(r'\[|\]', ''),(r'\s+\.', '.'),(r'\s+', ' ')]
+    while any(re_sub(pattern, replacement, file_) != file_ for pattern, replacement in patterns):
+        file_ = min((re_sub(pattern, replacement, file_) for pattern, replacement in patterns), key=len)
+
     if lremname and not lremname.startswith('|'):
         lremname = f"|{lremname}"
     lremname = lremname.replace('\s', ' ')
