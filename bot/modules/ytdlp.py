@@ -90,9 +90,9 @@ class YtSelection:
         try:
             await wait_for(self.event.wait(), timeout=self.__timeout)
         except:
-            msg = f'Timed Out. Task has been cancelled!\n\ncc: {self.__tag}'
+            msg = f'<b>Timed Out. Task has been cancelled!\n\n👤 Added By : {self.__tag}</b>'
             ytmsg = await editMessage(self.__reply_to, msg)
-            LOGGER.info(f"YT-DLP Selection Timed Out: {self.__message.text} added by : {self.__tag}")
+            LOGGER.info(f"<b>🎥 YT-DLP Selection Timed Out: {self.__message.text} 👤 Added By : {self.__tag}</b>")
             self.qual = None
             self.is_cancelled = True
             self.event.set()
@@ -526,7 +526,7 @@ async def _ytdl(client, message, isLeech=False, sameDir=None, bulk=[]):
         qual = await YtSelection(client, message).get_quality(result)
         if qual is None:
             return
-    LOGGER.info(f"<b>Downloading with YT-DLP: {link} \n\n👤 Added By : {user_id}")
+    LOGGER.info(f"<b>🎥 Downloading with YT-DLP: {link} \n\n👤 Added By : {user_id}</b<")
     playlist = 'entries' in result
     ydl = YoutubeDLHelper(listener)
     await ydl.add_download(link, path, name, qual, playlist, opt)
