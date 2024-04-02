@@ -116,9 +116,9 @@ class TgUploader:
         return True
 
     async def __prepare_file(self, file_, dirpath):
-        file_ = re_sub(r'www\S+', '', file_)
         if self.__lprefix or self.__lremname:
             file_ = await remove_unwanted(file_, self.__lremname)
+            file_ = re_sub(r'www\S+', '', file_)
             file_ = f"{self.__lprefix} {file_}"
             cap_mono = f"<b>{file_}</b>"
             self.__lprefix = re_sub('<.*?>', '', self.__lprefix)
