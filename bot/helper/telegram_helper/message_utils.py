@@ -115,16 +115,12 @@ async def delete_links(message):
 async def get_tg_link_content(link):
     message = None
     if link.startswith('https://t.me/'):
-        if re.match(r"https:\/\/t\.me\/(?:c\/)?([^\/]+)(?:\/[^\/]+)?\/([0-9]+)", link):
-            private = False
-            msg = re.match(r"https:\/\/t\.me\/(?:c\/)?([^\/]+)(?:\/[^\/]+)?\/([0-9]+)", link)
-        else:
-            return None
+        private = False
+        msg = re_match(r"https:\/\/t\.me\/(?:c\/)?([^\/]+)(?:\/[^\/]+)?\/([0-9]+)", link)
     else:
-        private = True
-        msg = re.match(r"tg:\/\/openmessage\?user_id=([0-9]+)&message_id=([0-9]+)", link)
-        if not msg:
-            return None
+        private = False
+        msg = re_match(
+            r"tg:\/\/openmessage\?user_id=([0-9]+)&message_id=([0-9]+)", link)
         if not user:
             raise TgLinkException('USER_SESSION_STRING required for this private link!')
 
@@ -137,9 +133,9 @@ async def get_tg_link_content(link):
         try:
             message = await bot.get_messages(chat_id=chat, message_ids=msg_id)
             if message.empty:
-                private = True
+                private = False
         except Exception as e:
-            private = True
+            private = False
             if not user:
                 raise e
 
