@@ -162,7 +162,7 @@ class TgUploader:
                     new_path = ospath.join(dirpath, f"{name}{ext}")
                     await aiorename(self.__up_path, new_path)
                     self.__up_path = new_path
-            cap_mono = f"<b>1 {ospath.basename(file_)}</b>"
+            cap_mono = f"<b>{ospath.basename(file_)}</b>"
             
         return cap_mono
 
