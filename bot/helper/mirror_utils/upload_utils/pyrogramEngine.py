@@ -160,7 +160,7 @@ class TgUploader:
                 new_path = ospath.join(dirpath, f"{name}{ext}")
                 await aiorename(self.__up_path, new_path)
                 self.__up_path = new_path
-    return cap_mono,file_
+        return cap_mono,file_
 
 
     async def __get_input_media(self, subkey, key, msg_list=None):
