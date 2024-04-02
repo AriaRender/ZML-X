@@ -120,11 +120,12 @@ class TgUploader:
         while any(re_sub(pattern, replacement, file_) != file_ for pattern, replacement in patterns):
             file_ = min((re_sub(pattern, replacement, file_) for pattern, replacement in patterns), key=len)
         
+        cap_mono = f"<b>{file_}</b>"
         if self.__lprefix or self.__lremname:
             file_ = await remove_unwanted(file_, self.__lremname)
             file_ = f"{self.__lprefix} - {file_}"
-            cap_mono = f"<b>{file_}</b>"
             self.__lprefix = re_sub('<.*?>', '', self.__lprefix)
+            
             if self.__listener.seed and not self.__listener.newDir and not dirpath.endswith("/splited_files_z"):
                 dirpath = f'{dirpath}/copied_z'
                 await makedirs(dirpath, exist_ok=True)
@@ -132,39 +133,38 @@ class TgUploader:
                 self.__up_path = await copy(self.__up_path, new_path)
             else:
                 new_path = ospath.join(dirpath, f"{file_}")
-                self.__up_path = await copy(self.__up_path, new_path)
+                await aiorename(self.__up_path, new_path)
+                self.__up_path = new_path
         else:
-            cap_mono = f"<b>{file_}</b>"
-        if len(file_) > 60:
-            if is_archive(file_):
-                name = get_base_name(file_)
-                ext = file_.split(name, 1)[1]
-            elif match := re_match(r".+(?=\..+\.0*\d+$)|.+(?=\.part\d+\..+$)", file_):
-                name = match.group(0)
-                ext = file_.split(name, 1)[1]
-            elif len(fsplit := ospath.splitext(file_)) > 1:
-                name = fsplit[0]
-                ext = fsplit[1]
-            else:
-                name = file_
-                ext = ''
-            extn = len(ext)
-            remain = 60 - extn
-            name = name[:remain]
-            if self.__listener.seed and not self.__listener.newDir and not dirpath.endswith("/splited_files_z"):
-                dirpath = f'{dirpath}/copied_z'
-                await makedirs(dirpath, exist_ok=True)
-#                new_path = ospath.join(dirpath, f"{name}{ext}")
-#                self.__up_path = await copy(self.__up_path, new_path)
-                new_path = ospath.join(dirpath, f"{file_}")
-                self.__up_path = await copy(self.__up_path, new_path)
-            else:
-#                new_path = ospath.join(dirpath, f"{name}{ext}")
-#                await aiorename(self.__up_path, new_path)
-#                self.__up_path = new_path
-                new_path = ospath.join(dirpath, f"{file_}")
-                self.__up_path = await copy(self.__up_path, new_path)
+            if len(file_) > 60:
+                if is_archive(file_):
+                    name = get_base_name(file_)
+                    ext = file_.split(name, 1)[1]
+                elif match := re_match(r".+(?=\..+\.0*\d+$)|.+(?=\.part\d+\..+$)", file_):
+                    name = match.group(0)
+                    ext = file_.split(name, 1)[1]
+                elif len(fsplit := ospath.splitext(file_)) > 1:
+                    name = fsplit[0]
+                    ext = fsplit[1]
+                else:
+                    name = file_
+                    ext = ''
+                extn = len(ext)
+                remain = 60 - extn
+                name = name[:remain]
+                if self.__listener.seed and not self.__listener.newDir and not dirpath.endswith("/splited_files_z"):
+                    dirpath = f'{dirpath}/copied_z'
+                    await makedirs(dirpath, exist_ok=True)
+                    new_path = ospath.join(dirpath, f"{name}{ext}")
+                    self.__up_path = await copy(self.__up_path, new_path)
+                else:
+                    new_path = ospath.join(dirpath, f"{name}{ext}")
+                    await aiorename(self.__up_path, new_path)
+                    self.__up_path = new_path
+            cap_mono = f"<b>{ospath.basename(file_)}</b>"
+            
         return cap_mono
+
 
     async def __get_input_media(self, subkey, key, msg_list=None):
         rlist = []
