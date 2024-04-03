@@ -118,7 +118,7 @@ async def get_tg_link_content(link):
         private = False
         msg = re_match(r"https:\/\/t\.me\/(?:c\/)?([^\/]+)(?:\/[^\/]+)?\/([0-9]+)", link)
     else:
-        private = False
+        private = True
         msg = re_match(
             r"tg:\/\/openmessage\?user_id=([0-9]+)&message_id=([0-9]+)", link)
         if not user:
@@ -133,9 +133,9 @@ async def get_tg_link_content(link):
         try:
             message = await bot.get_messages(chat_id=chat, message_ids=msg_id)
             if message.empty:
-                private = False
+                private = True
         except Exception as e:
-            private = False
+            private = True
             if not user:
                 raise e
 
