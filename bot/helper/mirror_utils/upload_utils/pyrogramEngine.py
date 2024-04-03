@@ -286,7 +286,7 @@ class TgUploader:
             msg += f'\n\n<b>📦 Size </b>: {get_readable_file_size(size)}'
             msg += f'\n\n<b>☑ #Leech_Completed</b>'
             if self.__sent_msg is not None:
-                await self.__sent_msg.reply(quote=True, disable_web_page_preview=True)
+                await self.__sent_msg.reply(text=msg, quote=True, disable_web_page_preview=True)
         LOGGER.info(f"Leech Completed: {self.name}")
         await self.__listener.onUploadComplete(None, size, self.__msgs_dict, self.__total_files, self.__corrupted, self.name)
 
