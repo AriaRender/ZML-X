@@ -130,7 +130,7 @@ class TgUploader:
                 self.__up_path = await copy(self.__up_path, new_path)
             else:
                 new_path = ospath.join(dirpath, f"{nfile_}")
-                #await aiorename(self.__up_path, new_path)
+                await aiorename(self.__up_path, new_path)
                 self.__up_path = new_path
         else:
             cap_mono = f"<b>{nfile_}</b>"
