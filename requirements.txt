@@ -9,12 +9,10 @@ bencoding
 cloudscraper
 dnspython
 feedparser
-flask
 gevent
 google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib
-gunicorn
 httpx
 lxml
 motor
@@ -37,3 +35,8 @@ urllib3
 uvloop
 xattr
 yt-dlp
+Flask==1.1.2
+gunicorn==20.1.0
+Jinja2==3.0.3
+werkzeug==2.0.2
+itsdangerous==2.0.1
